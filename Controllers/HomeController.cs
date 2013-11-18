@@ -10,13 +10,26 @@ namespace Homework5.Controllers
 
     public class HomeController : Controller
     {
-        private MoviesDb db = new MoviesDb();
+        private MoviesDb db = new MoviesDb(string searchTerm=null);
 
         public ActionResult Index()
         {
-            
+            var m = db.Movies
+              .Where(m => searchTerm == null || m.Title.StartsWith(searchTerm))
+              .Take(30)
+              .OrderBy(m => m.Title)
+              .Select(
+                  m => new MovieViewModel
+                  {
+                      Id = m.Id,
+                      Title = m.Title,
+                      C = b.Color,
+                      MaxCalories = b.MaxCalories,
 
-            return View();
+
+                  });
+
+            return View(m);
         }
 
         public ActionResult About()

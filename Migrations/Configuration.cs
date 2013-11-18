@@ -30,6 +30,7 @@ namespace Homework5.Migrations
             context.Movies.AddOrUpdate(
                m => m.Title,
                new Movie { Title = "Sharknado", Year = "2013", LengthInMinutes = "129", Format = "Cloud", IMDBurl = "blahblahblah" });
+
               
               /* new Basket
                {
