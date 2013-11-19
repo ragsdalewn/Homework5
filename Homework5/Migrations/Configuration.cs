@@ -1,10 +1,11 @@
 namespace Homework5.Migrations
 {
     using Homework5.Models;
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Migrations;
-using System.Linq;
+    using System;
+    using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Migrations;
+    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<Homework5.Models.MoviesDb>
     {
@@ -29,7 +30,18 @@ using System.Linq;
             //
             context.Movies.AddOrUpdate(
                 m => m.Title,
-                new Movie { Title = "Sharknado", Year = "2013", LengthInMinutes = 129, IMDBurl = "blah blah blah", Format = "Cloud" });
+                new Movie { Title = "Sharknado", Year = "2013", LengthInMinutes = 129, IMDBurl = "blah blah blah", Format = "Cloud" },
+                new Movie
+                {
+                    Title = "The Little Mermaid",
+                    Year = "1995",
+                    LengthInMinutes = 147,
+                    IMDBurl = "blah blah",
+                    Format = "DVD",
+                    Tags = new List<Tag>{
+                    new Tag { MovieId = Movie.Id, Date = "11/16/2013", MovieTag = "My favorite"}
+        }
+                });
         }
     }
 }
