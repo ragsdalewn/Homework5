@@ -21,10 +21,13 @@
             @Html.DisplayNameFor(model => model.LengthInMinutes)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.IMDBurl)
+            @Html.DisplayNameFor(model => model.Format)
+        </th>
+         <th>
+            @Html.DisplayNameFor(model => model.NumTags)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Format)
+            @Html.DisplayNameFor(model => model.IMDBurl)
         </th>
         <th></th>
     </tr>
@@ -40,16 +43,21 @@
         <td>
             @Html.DisplayFor(modelItem => item.LengthInMinutes)
         </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.Format)
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.NumTags)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.IMDBurl)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Format)
-        </td>
+       
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id }) |
+            @Html.ActionLink("Tags", "Tags", new { id=item.Id})
         </td>
     </tr>
 }

@@ -17,6 +17,6 @@ namespace Homework5.Models
         public int NumTags { get; set; }
         [Display(Name = "IMDB Url")]
         public string IMDBurl { get; set; }
-
+        public IQueryable<TagViewModel> Tags {get; set;}
     }
 }

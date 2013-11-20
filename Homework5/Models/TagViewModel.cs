@@ -5,7 +5,7 @@ using System.Web;
 
 namespace Homework5.Models
 {
-    public class Tag
+    public class TagViewModel
     {
         public int Id { get; set; }
         public int MovieId { get; set; }
@@ -13,3 +13,6 @@ namespace Homework5.Models
         public string MovieTag { get; set; }
     }
 }
+
+
+         

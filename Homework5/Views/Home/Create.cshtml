@@ -1,0 +1,67 @@
+﻿@model Homework5.Models.Movie
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Movie</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Title)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Title)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Year)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Year)
+            @Html.ValidationMessageFor(model => model.Year)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.LengthInMinutes)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.LengthInMinutes)
+            @Html.ValidationMessageFor(model => model.LengthInMinutes)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IMDBurl)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.IMDBurl)
+            @Html.ValidationMessageFor(model => model.IMDBurl)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Format)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Format)
+            @Html.ValidationMessageFor(model => model.Format)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

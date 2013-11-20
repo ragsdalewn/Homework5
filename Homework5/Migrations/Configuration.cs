@@ -39,9 +39,10 @@ namespace Homework5.Migrations
                     IMDBurl = "blah blah",
                     Format = "DVD",
                     Tags = new List<Tag>{
-                    new Tag { MovieId = Movie.Id, Date = "11/16/2013", MovieTag = "My favorite"}
-        }
-                });
-        }
-    }
-}
+                    new Tag { Date = DateTime.Now, MovieTag = "My favorite"}
+        
+                     }//end list
+                });//end movie
+         }//end seed
+    }//end class
+}//end namespace

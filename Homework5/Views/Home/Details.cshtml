@@ -1,0 +1,57 @@
+﻿@model Homework5.Models.MovieViewModel
+
+@{
+    ViewBag.Title = Model.Title;
+}
+
+<h2>@ViewBag.Title</h2>
+
+<fieldset>
+    <legend>MovieViewModel</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Title)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Title)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Year)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Year)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.LengthInMinutes)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.LengthInMinutes)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Format)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Format)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.NumTags)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.NumTags)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.IMDBurl)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IMDBurl)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
