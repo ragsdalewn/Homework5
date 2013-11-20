@@ -164,6 +164,8 @@ UpgradeLog*.htm
 # SQL Server files
 *.mdf
 *.ldf
+.ldf
+MoviesDb_log.ldf
 
 #############
 ## Windows detritus
