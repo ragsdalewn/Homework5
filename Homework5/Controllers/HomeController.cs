@@ -181,7 +181,7 @@ namespace Homework5.Controllers
                 _db.Tags.Add(new Tag { MovieId = viewModel.MovieId, Date = DateTime.Now, MovieTag = viewModel.MovieTag });
                 _db.SaveChanges();
 
-                return Tags(viewModel.MovieId);
+                return RedirectToAction("Tags", new { id = viewModel.MovieId });
             }
 
             return View("CreateTag", viewModel);
