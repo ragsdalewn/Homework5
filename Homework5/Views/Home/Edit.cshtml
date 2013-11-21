@@ -1,4 +1,4 @@
-﻿@model Homework5.Models.Movie
+﻿@model Homework5.Models.MovieViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -50,7 +50,7 @@
             @Html.LabelFor(model => model.Format)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.Format)
+            @Html.DropDownListFor(model => model.Format, new SelectList(Enum.GetValues(typeof(Homework5.Models.FormatEnum))))
             @Html.ValidationMessageFor(model => model.Format)
         </div>
 

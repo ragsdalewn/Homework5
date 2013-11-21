@@ -1,10 +1,10 @@
-﻿@model Homework5.Models.Tag
+﻿@model Homework5.Models.TagViewModel
 
 @{
-    ViewBag.Title = "EditTag";
+    ViewBag.Title = "Edit Tag";
 }
 
-<h2>EditTag</h2>
+<h2>@Model.MovieTitle</h2>
 
 @using (Html.BeginForm()) {
     @Html.ValidationSummary(true)
@@ -13,22 +13,8 @@
         <legend>Tag</legend>
 
         @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.MovieId)
 
-        <div class="editor-label">
-            @Html.LabelFor(model => model.MovieId)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.MovieId)
-            @Html.ValidationMessageFor(model => model.MovieId)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Date)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Date)
-            @Html.ValidationMessageFor(model => model.Date)
-        </div>
 
         <div class="editor-label">
             @Html.LabelFor(model => model.MovieTag)
@@ -45,7 +31,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to Movie Tags", "Tags", new {id = Model.MovieId })
 </div>
 
 @section Scripts {

@@ -30,14 +30,14 @@ namespace Homework5.Migrations
             //
             context.Movies.AddOrUpdate(
                 m => m.Title,
-                new Movie { Title = "Sharknado", Year = "2013", LengthInMinutes = 129, IMDBurl = "blah blah blah", Format = "Cloud" },
+                new Movie { Title = "Sharknado", Year = "2013", LengthInMinutes = 129, IMDBurl = "blah blah blah", Format = 3 },
                 new Movie
                 {
                     Title = "The Little Mermaid",
                     Year = "1995",
                     LengthInMinutes = 147,
                     IMDBurl = "blah blah",
-                    Format = "DVD",
+                    Format = 3,
                     Tags = new List<Tag>{
                     new Tag { Date = DateTime.Now, MovieTag = "My favorite"}
         

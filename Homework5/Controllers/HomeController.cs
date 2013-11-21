@@ -25,7 +25,7 @@ namespace Homework5.Controllers
                     Year = m.Year,
                     NumTags = m.Tags.Count(),
                     IMDBurl = m.IMDBurl,
-                    Format = m.Format,
+                    Format = (FormatEnum)m.Format,
                     Tags = _db.Tags
                             .Where(t => t.MovieId == m.Id)
                             .Select(t => new TagViewModel
@@ -44,48 +44,79 @@ namespace Homework5.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(new MovieViewModel { });
         }
 
         [HttpPost]
-        public ActionResult Create(Movie movie)
+        public ActionResult Create(MovieViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                Movie movie = new Movie();
+                movie.Title = viewModel.Title;
+                movie.Year = viewModel.Year;
+                movie.LengthInMinutes = viewModel.LengthInMinutes;
+                movie.IMDBurl = viewModel.IMDBurl;
+                movie.Format = Convert.ToInt32(viewModel.Format);
+               
                 _db.Movies.Add(movie);
                 _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
-            return View(movie);
+            return View(viewModel);
         }
 
         public ActionResult Edit(int id = 0)
         {
-            Movie movie = _db.Movies.Find(id);
+            MovieViewModel movie = _db.Movies
+             .Where(m => m.Id == id)
+             .Select(m => new MovieViewModel
+             {
+                 Id = m.Id,
+                 Title = m.Title,
+                 Tags = _db.Tags
+                 .Where(t => t.MovieId == m.Id)
+                 .Select(t => new TagViewModel
+                 {
+                     Id = t.Id,
+                     Date = t.Date,
+                     MovieTag = t.MovieTag
+                 })
+             }).FirstOrDefault();
+
             if (movie == null)
             {
                 return HttpNotFound();
             }
+
             return View(movie);
         }
-
-
+        
         [HttpPost]
-        public ActionResult Edit(Movie movie)
+        public ActionResult Edit(MovieViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
+                Movie movie = _db.Movies.Where(m => m.Id == viewModel.Id).FirstOrDefault();
+                movie.Title = viewModel.Title;
+                movie.Year = viewModel.Year;
+                movie.LengthInMinutes = viewModel.LengthInMinutes;
+                movie.IMDBurl = viewModel.IMDBurl;
+                movie.Format = Convert.ToInt32(viewModel.Format);
+                 
                 _db.Entry(movie).State = EntityState.Modified;
                 _db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
-            return View(movie);
+
+            return View(viewModel);
         }
 
         public ActionResult Details(int id)
         {
-
             MovieViewModel movie = _db.Movies
                     .Where(m => m.Id == id)
                     .Select(m => new MovieViewModel
@@ -96,7 +127,7 @@ namespace Homework5.Controllers
                         Year = m.Year,
                         NumTags = m.Tags.Count(),
                         IMDBurl = m.IMDBurl,
-                        Format = m.Format,
+                        Format = (FormatEnum)m.Format,
                         Tags = _db.Tags
                                 .Where(t => t.MovieId == m.Id)
                                 .Select(t => new TagViewModel
@@ -114,14 +145,29 @@ namespace Homework5.Controllers
 
         public ActionResult Delete(int id = 0)
         {
-            Movie movie = _db.Movies.Find(id);
+            MovieViewModel movie = _db.Movies
+             .Where(m => m.Id == id)
+             .Select(m => new MovieViewModel
+             {
+                 Id = m.Id,
+                 Title = m.Title,
+                 Tags = _db.Tags
+                 .Where(t => t.MovieId == m.Id)
+                 .Select(t => new TagViewModel
+                 {
+                     Id = t.Id,
+                     Date = t.Date,
+                     MovieTag = t.MovieTag
+                 })
+             }).FirstOrDefault();
+
             if (movie == null)
             {
                 return HttpNotFound();
             }
+
             return View(movie);
         }
-
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
@@ -149,10 +195,18 @@ namespace Homework5.Controllers
                         Id = t.Id,
                         Date = t.Date,
                         MovieTag = t.MovieTag
-                    })
+                    }),
+                    NumTags = _db.Tags
+                    .Where(t => t.MovieId == m.Id).Count()
+
                 }).FirstOrDefault();
 
-            return View(movie);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+               
+             return View(movie);
         }
 
         [HttpGet]
@@ -177,24 +231,76 @@ namespace Homework5.Controllers
 
         public ActionResult EditTag(int id)
         {
-            Tag tag = _db.Tags.Find(id);
-            if (tag == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tag);
+           
+            TagViewModel viewModel = _db.Tags
+                    .Where(t => t.Id == id)
+                    .Select(t => new TagViewModel
+                    {
+                        Id = t.Id,
+                        Date = t.Date,
+                        MovieTag = t.MovieTag,
+                        MovieId = t.MovieId,
+                      
+                    }).FirstOrDefault();
+
+            String movieTitle = _db.Movies.Find(viewModel.MovieId).Title;
+            viewModel.MovieTitle = movieTitle;
+
+            return View(viewModel);
+
         }
 
         [HttpPost]
-        public ActionResult EditTag(Tag tag)
+        public ActionResult EditTag(TagViewModel viewModel)
         {
+
             if (ModelState.IsValid)
             {
-                _db.Entry(tag).State = EntityState.Modified;
-                _db.SaveChanges();
-                return RedirectToAction("Index");
+               Tag tag = _db.Tags.Where(t => t.Id == viewModel.Id).FirstOrDefault();
+               tag.MovieTag = viewModel.MovieTag;
+               tag.Date = DateTime.Now;
+               _db.Entry(tag).State = EntityState.Modified;
+               _db.SaveChanges();
+
+               return RedirectToAction("Tags", new { id = viewModel.MovieId });
             }
-            return View(tag);
+
+            return View(viewModel);
+        }
+
+     public ActionResult TagDelete(int id = 0)
+        {
+               TagViewModel tagView = _db.Tags
+                    .Where(t => t.Id == id)
+                    .Select(t => new TagViewModel
+                    {
+                        Id = t.Id,
+                        Date = t.Date,
+                        MovieTag = t.MovieTag,
+                        MovieId = t.MovieId,
+
+                    }).FirstOrDefault();
+
+               String movieTitle = _db.Movies.Find(tagView.MovieId).Title;
+               tagView.MovieTitle = movieTitle;
+         
+            if (tagView == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(tagView);
+        }
+
+
+        [HttpPost, ActionName("Delete Tag")]
+        public ActionResult TagDeleteConfirmed(int id)
+        {
+            Tag tag = _db.Tags.Find(id);
+			int MovieId = tag.MovieId;
+            _db.Tags.Remove(tag);
+            _db.SaveChanges();
+            return RedirectToAction("Tags", new { id = MovieId });
         }
 
 

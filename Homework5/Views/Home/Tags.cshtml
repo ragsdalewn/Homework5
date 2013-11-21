@@ -11,31 +11,41 @@
 </p>
 <table>
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
+     
         <th>
             @Html.DisplayNameFor(model => model.Tags)
         </th>
      
         <th></th>
     </tr>
-
-@foreach (var item in Model.Tags) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MovieTag)
-        </td>
+    
+    @if (Model.NumTags == 0)
+    {
+      <tr>
+            <td>
+                @Html.Encode("There are no tags currently available for this movie")
+            </td>
+            <th></th>
+      </tr>
+    }
+    else
+    {
+        foreach (var item in Model.Tags) {
+            <tr>
        
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieTag)
+                </td>
+       
+                <td>
+                    @Html.ActionLink("Edit", "EditTag", new { id=item.Id }) |
+           
+                    @Html.ActionLink("Delete", "TagDelete", new { id=item.Id })
+                </td>
+            </tr>
+        }
+    }
 </table>
+<div>
+    @Html.ActionLink("Back to Movies", "Index")
+</div>

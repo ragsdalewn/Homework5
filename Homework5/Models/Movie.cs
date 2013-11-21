@@ -12,7 +12,7 @@ namespace Homework5.Models
         public string Year { get; set; }
         public int LengthInMinutes { get; set; }
         public string IMDBurl { get; set; }
-        public string Format { get; set; }
+        public int Format { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
     }
 }

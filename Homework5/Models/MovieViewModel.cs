@@ -12,7 +12,7 @@ namespace Homework5.Models
         public string Title { get; set; }
         public string Year { get; set; }
         public int LengthInMinutes { get; set; }
-        public string Format { get; set; }
+        public FormatEnum Format {  get; set; }
         [Display(Name = "Number of Tags")]
         public int NumTags { get; set; }
         [Display(Name = "IMDB Url")]
