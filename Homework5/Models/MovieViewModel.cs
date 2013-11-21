@@ -11,6 +11,7 @@ namespace Homework5.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Year { get; set; }
+        [Display(Name = "Length")]
         public int LengthInMinutes { get; set; }
         public FormatEnum Format {  get; set; }
         [Display(Name = "Number of Tags")]
