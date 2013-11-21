@@ -12,10 +12,12 @@ namespace Homework5.Controllers
     {
         private MoviesDb _db = new MoviesDb();
 
-        public ActionResult Index()
+        public ActionResult Index(string searchTerm = null)
         {
             var v = _db.Movies
+                .Where(m => searchTerm == null || m.Title.StartsWith(searchTerm))
                 .Take(30)
+                .OrderBy(m => m.Title)
                 .Select(m => new MovieViewModel
 
                 {
@@ -37,7 +39,10 @@ namespace Homework5.Controllers
                             })
                 });
 
+
             return View(v);
+
+         
         }
 
         //Movie

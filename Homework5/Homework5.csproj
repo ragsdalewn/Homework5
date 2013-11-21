@@ -299,6 +299,7 @@
     <Content Include="Views\Home\CreateTag.cshtml" />
     <Content Include="Views\Home\EditTag.cshtml" />
     <Content Include="Views\Home\TagDelete.cshtml" />
+    <Content Include="Views\_View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
