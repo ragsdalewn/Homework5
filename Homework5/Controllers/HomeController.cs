@@ -11,13 +11,13 @@ namespace Homework5.Controllers
     public class HomeController : Controller
     {
         private MoviesDb _db = new MoviesDb();
-     
+
         public ActionResult Index()
         {
             var v = _db.Movies
                 .Take(30)
                 .Select(m => new MovieViewModel
-                
+
                 {
                     Id = m.Id,
                     Title = m.Title,
@@ -27,7 +27,7 @@ namespace Homework5.Controllers
                     IMDBurl = m.IMDBurl,
                     Format = m.Format,
                     Tags = _db.Tags
-                            .Where (t => t.MovieId == m.Id)
+                            .Where(t => t.MovieId == m.Id)
                             .Select(t => new TagViewModel
                             {
                                 Id = t.Id,
@@ -39,6 +39,8 @@ namespace Homework5.Controllers
 
             return View(v);
         }
+
+        //Movie
 
         public ActionResult Create()
         {
@@ -81,7 +83,6 @@ namespace Homework5.Controllers
             return View(movie);
         }
 
-
         public ActionResult Details(int id)
         {
 
@@ -110,6 +111,29 @@ namespace Homework5.Controllers
             return View(movie);
         }
 
+
+        public ActionResult Delete(int id = 0)
+        {
+            Movie movie = _db.Movies.Find(id);
+            if (movie == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movie);
+        }
+
+
+        [HttpPost, ActionName("Delete")]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            Movie movie = _db.Movies.Find(id);
+            _db.Movies.Remove(movie);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        //Tags
+
         public ActionResult Tags(int id)
         {
             MovieViewModel movie = _db.Movies
@@ -131,25 +155,46 @@ namespace Homework5.Controllers
             return View(movie);
         }
 
-      
-        public ActionResult Delete(int id = 0)
+        [HttpGet]
+        public ActionResult CreateTag(int id)
         {
-            Movie movie = _db.Movies.Find(id);
-            if (movie == null)
+            return View(new TagViewModel { MovieId = id });
+        }
+
+        [HttpPost]
+        public ActionResult CreateTag(TagViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                _db.Tags.Add(new Tag { MovieId = viewModel.MovieId, Date = DateTime.Now, MovieTag = viewModel.MovieTag });
+                _db.SaveChanges();
+
+                return RedirectToAction("Tags", new { id = viewModel.MovieId });
+            }
+
+            return View("CreateTag", viewModel);
+        }
+
+        public ActionResult EditTag(int id)
+        {
+            Tag tag = _db.Tags.Find(id);
+            if (tag == null)
             {
                 return HttpNotFound();
             }
-            return View(movie);
+            return View(tag);
         }
 
-
-        [HttpPost, ActionName("Delete")]
-        public ActionResult DeleteConfirmed(int movieId)
+        [HttpPost]
+        public ActionResult EditTag(Tag tag)
         {
-            Movie movie = _db.Movies.Find(movieId);
-            _db.Movies.Remove(movie);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                _db.Entry(tag).State = EntityState.Modified;
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return View(tag);
         }
 
 
@@ -165,26 +210,6 @@ namespace Homework5.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
-
-        [HttpGet]
-        public ActionResult CreateTag(int  id)
-        {
-            return View(new TagViewModel { MovieId = id });
-        }
-
-        [HttpPost]
-        public ActionResult CreateTag(TagViewModel viewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Tags.Add(new Tag { MovieId = viewModel.MovieId, Date = DateTime.Now, MovieTag = viewModel.MovieTag });
-                _db.SaveChanges();
-
-                return Tags(viewModel.MovieId);
-            }
-
-            return View("CreateTag", viewModel);
         }
 
         protected override void Dispose(bool disposing)
