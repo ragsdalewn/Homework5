@@ -300,6 +300,7 @@
     <Content Include="Views\Home\EditTag.cshtml" />
     <Content Include="Views\Home\TagDelete.cshtml" />
     <Content Include="Views\_View.cshtml" />
+    <Content Include="Views\Home\_MovieList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

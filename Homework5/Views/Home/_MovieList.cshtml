@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Homework5.Models.MovieViewModel>
+
+
+<div id="movieList">
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Year)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LengthInMinutes)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Format)
+        </th>
+         <th>
+            @Html.DisplayNameFor(model => model.NumTags)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.IMDBurl)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Year)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LengthInMinutes)
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.Format)
+        </td>
+         <td>
+            @Html.DisplayFor(modelItem => item.NumTags)
+        </td>
+        <td>
+            <a href="@Html.DisplayFor(modelItem => item.IMDBurl)">@Html.DisplayFor(modelItem => item.IMDBurl)</a>
+        </td>
+       
+        <td>
+            @Html.ActionLink("Edit Movie", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Movie Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete Movie", "Delete", new { id=item.Id }) |
+            @Html.ActionLink("View Tags", "Tags", new { id=item.Id})
+        </td>
+    </tr>
+}
+
+</table>
+</div>
+

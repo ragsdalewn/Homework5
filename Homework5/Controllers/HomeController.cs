@@ -40,10 +40,26 @@ namespace Homework5.Controllers
                 });
 
 
-            return View(v);
+            if (Request.IsAjaxRequest())
+            {
+                return PartialView("_MovieList", v);
+            }
 
-         
+            return View(v);
         }
+
+        public ActionResult SearchAutoComplete(string term)
+        {
+            var model = _db.Movies
+                .Where(m => m.Title.StartsWith(term))
+                .Take(15)
+                .Select(m => new
+                {
+                    label = m.Title
+                });
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+
 
         //Movie
 
